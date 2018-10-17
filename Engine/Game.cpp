@@ -68,10 +68,6 @@ void Game::UpdateModel()
 				del_loc = { 0, 1 };
 			};
 		}
-		if (wnd.kbd.KeyIsPressed(VK_RETURN)) {
-			del_loc = { 0,0 };
-		}
-
 		++snakecounter;
 
 		if (snakecounter >= rate) {
@@ -85,7 +81,10 @@ void Game::UpdateModel()
 				if (eating) {
 					snake.Grow();
 				}
-				snake.Move(del_loc);
+				if (wnd.kbd.KeyIsPressed(VK_RETURN)) {
+					del_loc = { 0,0 };
+				}
+				snake.Move(del_loc); 
 				if (eating) {
 					goal.Respawn(rng, brd, snake);
 				}

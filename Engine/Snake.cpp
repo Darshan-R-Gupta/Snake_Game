@@ -6,10 +6,13 @@ Snake::Snake(const Location & loc)
 }
 void Snake::Move(const Location & dloc)
 {
-	for (int i = nseg - 1; i > 0; --i) {
-		seg[i].Follow(seg[i - 1]);
+	Location m = { 0,0 };
+	if (dloc != m) {
+		for (int i = nseg - 1; i > 0; --i) {
+			seg[i].Follow(seg[i - 1]);
+		}
+		seg[0].Move(dloc);
 	}
-	seg[0].Move(dloc);
 }
 void Snake::Grow()
 {
