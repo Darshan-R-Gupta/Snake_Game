@@ -11,7 +11,7 @@ private:
 		void Follow(const Segment & next);
 		void Draw(Board & brd) const;
 		const Location& getloc() const;
-		const int thick = 0;
+		const int thick = 7;
 		Location loc;
 		Color c;
 	};

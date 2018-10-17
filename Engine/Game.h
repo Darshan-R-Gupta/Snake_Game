@@ -40,6 +40,9 @@ private:
 	/********************************/
 	/*  User Functions              */
 	void reset(Snake &snake);
+	void drawp1();
+	void drawp2();
+	void draw_draw();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -52,8 +55,8 @@ private:
 	void are_snakes_colliding(Snake &s1, Snake &s2);
 	std::mt19937 rng;
 	Goal goal;
-	Location del_loc = { 1, 0  };
-	Location del_loc1 = { 0, 1 };
+	Location del_loc = { 0, 0  };
+	Location del_loc1 = { 0,0 };
 	int rate = 5;
 	int snakecounter = 0;
 	int snakecounter1 = 0;
