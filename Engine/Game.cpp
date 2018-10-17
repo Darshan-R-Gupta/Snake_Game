@@ -44,7 +44,7 @@ void Game::Go()
 	ComposeFrame();
 	gfx.EndFrame();
 }
-
+int who;
 void Game::UpdateModel()
 {
 	if (!gameisover1) {
@@ -138,7 +138,7 @@ void Game::UpdateModel()
 			}
 		};
 	}
-	are_snakes_colliding(snake, snake1);
+	who = are_snakes_colliding(snake, snake1);
 }
 
 
@@ -146,29 +146,31 @@ void Game::reset(Snake &snake)
 {
 	snake.resetsnake(brd);
 }
-void Game::are_snakes_colliding(Snake & s1, Snake & s2)
+int Game::are_snakes_colliding(Snake & s1, Snake & s2)
 {
 	if (!((s1.nseg == 1) || (s2.nseg == 1)))
 	{
-
-
 		if (s1.seg[0].getloc() == s2.seg[0].getloc()) {
 			gameisover = true;
 			gameisover1 = true;
+			return 0;
 		}
 		for (int j = 1; j < s2.nseg; j++) {
 			if (s1.seg[0].getloc() == s2.seg[j].getloc()) {
 				gameisover = true;
+				return 1;
 				break;
 			}
 		}
 		for (int i = 0; i < s1.nseg; i++) {
 			if (s2.seg[0].getloc() == s1.seg[i].getloc()) {
 				gameisover1 = true;
+				return 2;
 				break;
 			}
 		}
 	}
+	return -1;
 }
 void Game::ComposeFrame()
 {
@@ -185,11 +187,26 @@ void Game::ComposeFrame()
 			SpriteCodex::DrawGameOver(3 * Graphics::ScreenWidth / 4, (Graphics::ScreenHeight / 2) -50, gfx);
 		}
 		bool both_over = (gameisover && gameisover1);
+		if (who != -1) {
+			if (who == 1) {
+				drawp2();
+			}
+			if (who == 2) {
+				drawp1();
+			}
+			if (who == 0) {
+				if (snake.nseg > snake1.nseg)			drawp1();
+				else if (snake.nseg < snake1.nseg)		drawp2();
+				else { draw_draw(); };
+			}
+		}
 		if (both_over) {
-			if(snake.nseg > snake1.nseg)			drawp1();
-			else if (snake.nseg < snake1.nseg)		drawp2();
-			else { draw_draw(); };
-			if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
+			if (who == -1) {
+				if (snake.nseg > snake1.nseg)			drawp1();
+				else if (snake.nseg < snake1.nseg)		drawp2();
+				else { draw_draw(); };
+			}
+				if (wnd.kbd.KeyIsPressed(VK_SPACE)) {
 				gameisover = false;
 				gameisover1 = false;
 				reset(snake);

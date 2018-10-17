@@ -52,7 +52,7 @@ private:
 	Board brd;
 	Snake snake;
 	Snake snake1;
-	void are_snakes_colliding(Snake &s1, Snake &s2);
+	int are_snakes_colliding(Snake &s1, Snake &s2);
 	std::mt19937 rng;
 	Goal goal;
 	Location del_loc = { 0, 0  };
