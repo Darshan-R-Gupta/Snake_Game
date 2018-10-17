@@ -11,7 +11,7 @@ private:
 		void Follow(const Segment & next);
 		void Draw(Board & brd) const;
 		const Location& getloc() const;
-		const int thick = 3;
+		const int thick = 0;
 		Location loc;
 		Color c;
 	};
@@ -19,13 +19,12 @@ private:
 public:
 	Snake(const Location &loc);
 	void Move(const Location & dloc);
-	void Grow();
+	void Grow(Color c);
 	void resetsnake(Board &brd);
 	void Draw(Board & brd) const;
 	Location getnextloc(const Location &dloc) const;
 	bool IsInTileExceptend(const Location &target) const;
 	bool IsInTile(const Location &target) const;
-	
 public:
 	static constexpr int maxseg = 100;
 	Segment seg[maxseg];

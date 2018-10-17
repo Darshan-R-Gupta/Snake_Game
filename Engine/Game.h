@@ -39,7 +39,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void reset();
+	void reset(Snake &snake);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -48,11 +48,16 @@ private:
 	/*  User Variables              */
 	Board brd;
 	Snake snake;
+	Snake snake1;
+	void are_snakes_colliding(Snake &s1, Snake &s2);
 	std::mt19937 rng;
 	Goal goal;
-	Location del_loc = { 1,0};
+	Location del_loc = { 1, 0  };
+	Location del_loc1 = { 0, 1 };
 	int rate = 5;
 	int snakecounter = 0;
+	int snakecounter1 = 0;
 	bool gameisover = false;
+	bool gameisover1 = false;
 	/********************************/
 };

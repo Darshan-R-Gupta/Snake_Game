@@ -1,6 +1,6 @@
 #include "Snake.h"
 #include <assert.h>
-Snake::Snake(const Location & loc)
+Snake::Snake(const Location & loc) 
 {
 	seg[0].InitHead(loc,Colors::White);
 }
@@ -14,38 +14,9 @@ void Snake::Move(const Location & dloc)
 		seg[0].Move(dloc);
 	}
 }
-void Snake::Grow()
+void Snake::Grow(Color c)
 {
-	if (nseg <= 4) {
-		seg[nseg].InitBody(Colors::Red); //red
-	}
-	else if (nseg <= 7) {
-		seg[nseg].InitBody(Colors::MakeRGB(255,77,33)); //Red(Orange component)
-	}
-	else if(nseg <= 11){
-		seg[nseg].InitBody(Colors::MakeRGB(255,111,0)); //Orange
-	}
-	else if (nseg <= 14) {
-		seg[nseg].InitBody(Colors::MakeRGB(227, 205,0));//Orange (Yellow component)
-	}
-	else if (nseg <= 18) {
-		seg[nseg].InitBody(Colors::MakeRGB(247,255,0));//Yellow
-	}
-	else if (nseg <= 21) {
-		seg[nseg].InitBody(Colors::MakeRGB(200, 255, 0));//Yello(Cyan component)
-	}
-	else if (nseg <= 25) {
-		seg[nseg].InitBody(Colors::MakeRGB(0, 255, 255)); //Cyan
-	}
-	else if (nseg <= 28) {
-		seg[nseg].InitBody(Colors::MakeRGB(0, 188, 255)); //Cyan (Blue Component)
-	}
-	else if (nseg <= 32) {
-		seg[nseg].InitBody(Colors::MakeRGB(0, 0, 255)); //Blue
-	}
-	else {
-		seg[nseg].InitBody(Colors::MakeRGB(120,0,255));	//Purple/Violet
-	};
+	seg[nseg].InitBody(c);
 	if (nseg < maxseg) ++nseg;
 }
 void Snake::Draw(Board & brd) const 
@@ -93,7 +64,6 @@ void Snake::Segment::InitHead(const Location & in_loc,Color col) {
 void Snake::Segment::InitBody(Color col)
 {
 	c = col;
-	
 }
 void Snake::Segment::Move(const Location & dloc)
 {
