@@ -47,27 +47,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	if (!gameisover) {
-		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
-			if (snake.seg[0].getloc().y != snake.seg[1].getloc().y) {
-				del_loc = { -1,0 };
-			};
-		};
-		if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
-			if (snake.seg[0].getloc().y != snake.seg[1].getloc().y) {
-				del_loc = { 1 , 0 };
-			}
-		};
-		if (wnd.kbd.KeyIsPressed(VK_UP)) {
-			if (snake.seg[0].getloc().x != snake.seg[1].getloc().x) {
-				del_loc = { 0,-1 };
-			};
-
-		}
-		if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
-			if (snake.seg[0].getloc().x != snake.seg[1].getloc().x) {
-				del_loc = { 0, 1 };
-			};
-		}
+		
 		++snakecounter;
 
 		if (snakecounter >= rate) {
@@ -84,7 +64,7 @@ void Game::UpdateModel()
 				if (wnd.kbd.KeyIsPressed(VK_RETURN)) {
 					del_loc = { 0,0 };
 				}
-				snake.Move(del_loc); 
+				snake.Move(del_loc);
 				if (eating) {
 					goal.Respawn(rng, brd, snake);
 				}
