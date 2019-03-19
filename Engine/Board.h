@@ -15,7 +15,7 @@ public:
 	void DrawBorder();
 	bool IsInsideBoard(const Location& loc) const;
 public:
-	static constexpr int dimension = 25;
+	static constexpr int dimension = 20;
 	Graphics &gfx;
 	static constexpr int width = (Graphics::ScreenWidth / dimension) -llw;
 	static constexpr int height = (Graphics::ScreenHeight / dimension) -llh;
