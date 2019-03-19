@@ -79,6 +79,50 @@ void Game::reset()
 	snake.resetsnake(brd);
 }
 
+void Game::AI_move()
+{
+	float d = distance(snake.seg[0].loc, goal.getloc);
+	Location possible[3];
+
+	//snake's orientation check 1
+	if (snake.seg[0].loc.x == (snake.seg[1].loc.x + 1)) {
+		possible[0] = { 0, -1};
+		possible[1] = { 0, 1 };
+		possible[2] = { 1, 0 };
+		
+		const Location next0 = snake.getnextloc(possible[0]);
+		const Location next1 = snake.getnextloc(possible[1]);
+		const Location next2 = snake.getnextloc(possible[2]);
+
+		//wall checks
+			if (!brd.IsInsideBoard(next0)) {
+				possible[0] = { 0,0 };
+			}
+			if (!brd.IsInsideBoard(next1)) {
+				possible[1] = { 0, 0 };
+			}
+			if (!brd.IsInsideBoard(next2)) {
+				possible[2] = { 0,0 };	//yesterday I left here and one thing is left
+										// -> after every possible values is 0, one thing is
+										//    for sure, the snake is gonna die so make any 
+										//    random move
+			}
+
+		//Self collision test
+			if(snake.seg[0].loc.y == )
+	}
+
+	//Snake's Orientation Check 2
+}
+float Game::distance(Location l1, Location l2)
+{
+	float X = (l2.x - l1.x)*(l2.x - l1.x);
+	float Y = (l2.y - l1.y)*(l2.y - l1.y);
+	float Z = X + Y;
+	float d = sqrt( Z );
+	return d;
+}
+
 
 
 void Game::ComposeFrame()

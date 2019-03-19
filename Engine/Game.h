@@ -50,9 +50,17 @@ private:
 	Snake snake;
 	std::mt19937 rng;
 	Goal goal;
-	Location del_loc = { 0,0};
+	Location del_loc = {0,0};
 	int rate = 5;
 	int snakecounter = 0;
 	bool gameisover = false;
+	/********************************/
+	
+	
+	
+	/********************************/
+	/*			AI functions		*/
+	void AI_move();
+	float distance(Location l1, Location l2);
 	/********************************/
 };
