@@ -51,7 +51,7 @@ private:
 	std::mt19937 rng;
 	Goal goal;
 	Location del_loc = {1,0};
-	int rate = 5;
+	int rate = 2;
 	int snakecounter = 0;
 	bool gameisover = false;
 	/********************************/

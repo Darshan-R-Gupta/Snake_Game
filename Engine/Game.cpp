@@ -163,28 +163,32 @@ void Game::AI_move()
 		if(or_no == 4)		del_loc = {0,-1};
 	}
 	else {
-		int ik = 0;
 		int i = 0;
-		for (ik = 0; ik < 3; ik++) {
-			if (d[i] > d[ik]) {
-				i = ik;
+		int j = 0;
+		//To sort the distances
+		for (i = 0; i < 3; i++) {
+			for (int j = i + 1; j < 3; j++) {
+				if (d[i] > d[j]) {
+					int temp = d[i];
+					d[i] = d[j];
+					d[j] = temp;
+					
+					Location temp1 = possible[i];
+					possible[i] = possible[j];
+					possible[j] = temp1;
+				}
 			}
 		}
 		Location no_loc = { 0,0 };
-		if (possible[i] != no_loc) {
-			del_loc = possible[i];
+		if (possible[0] != no_loc) {
+			del_loc = possible[0];
+		}
+		else if (possible[1] != no_loc) {
+			del_loc = possible[1];
 		}
 		else {
-			//if the shortest distant path have possible value 0
-			int j=0;
-			//make any move which is available;
-			for (int j = 0; j < 3; j++) {
-				if (possible[j] != no_loc)	break;
-			}
-			del_loc = possible[j];
-
+			del_loc = possible[2];
 		}
-
 	}
 
 }

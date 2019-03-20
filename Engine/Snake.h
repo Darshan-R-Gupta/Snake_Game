@@ -27,7 +27,7 @@ public:
 	bool IsInTile(const Location &target) const;
 	
 public:
-	static constexpr int maxseg = 100;
+	static constexpr int maxseg = 200;
 	Segment seg[maxseg];
 	int nseg = 2;
 };
