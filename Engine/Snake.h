@@ -29,5 +29,5 @@ public:
 public:
 	static constexpr int maxseg = 100;
 	Segment seg[maxseg];
-	int nseg = 1;
+	int nseg = 2;
 };

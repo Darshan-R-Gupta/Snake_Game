@@ -46,6 +46,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	AI_move();
 	if (!gameisover) {
 		
 		++snakecounter;
@@ -81,38 +82,111 @@ void Game::reset()
 
 void Game::AI_move()
 {
-	float d = distance(snake.seg[0].loc, goal.getloc);
 	Location possible[3];
-
-	//snake's orientation check 1
-	if (snake.seg[0].loc.x == (snake.seg[1].loc.x + 1)) {
-		possible[0] = { 0, -1};
+	int or_no = 1;
+	//snake's orientation check 1 -->
+	if ((snake.seg[0].loc.x == (snake.seg[1].loc.x + 1)) ||
+		(snake.nseg == 1)) {
+		possible[0] = { 0, -1 };
 		possible[1] = { 0, 1 };
 		possible[2] = { 1, 0 };
-		
-		const Location next0 = snake.getnextloc(possible[0]);
-		const Location next1 = snake.getnextloc(possible[1]);
-		const Location next2 = snake.getnextloc(possible[2]);
-
-		//wall checks
-			if (!brd.IsInsideBoard(next0)) {
-				possible[0] = { 0,0 };
-			}
-			if (!brd.IsInsideBoard(next1)) {
-				possible[1] = { 0, 0 };
-			}
-			if (!brd.IsInsideBoard(next2)) {
-				possible[2] = { 0,0 };	//yesterday I left here and one thing is left
-										// -> after every possible values is 0, one thing is
-										//    for sure, the snake is gonna die so make any 
-										//    random move
-			}
-
-		//Self collision test
-			if(snake.seg[0].loc.y == )
+		or_no = 1;
+	}
+	
+	//Snake's Orientation Check 2 \/
+	else if (snake.seg[0].loc.y == (snake.seg[1].loc.y + 1))
+	{
+		possible[0] = { 0,1 };
+		possible[1] = { 1,0 };
+		possible[2] = { -1,0 };
+		or_no = 2;
 	}
 
-	//Snake's Orientation Check 2
+	//Snake's Orientation Check 3 <--
+	else if (snake.seg[0].loc.x == (snake.seg[1].loc.x - 1))
+	{
+		possible[0] = {-1, 0};
+		possible[1] = { 0,1 };
+		possible[2] = { 0, -1 };
+		or_no = 3;
+	}
+
+	//Snake's Orientation Check 4 /\			//
+	else if (snake.seg[0].loc.y == (snake.seg[1].loc.y - 1))
+	{
+		possible[0] = {-1,0};
+		possible[1] = {1,0};
+		possible[2] = { 0,-1 };
+		or_no = 4;
+	}
+	
+	const Location next[] = { snake.getnextloc(possible[0]),
+							  snake.getnextloc(possible[1]),
+							  snake.getnextloc(possible[2])
+							};
+
+	float d[3] = { distance(goal.getloc(), next[0]),
+		distance(goal.getloc(), next[1]),
+		distance(goal.getloc(), next[2])
+	};
+
+	//wall checks
+	if (!brd.IsInsideBoard(next[0])) {
+		possible[0] = { 0,0 };
+	}
+	if (!brd.IsInsideBoard(next[1])) {
+		possible[1] = { 0, 0 };
+	}
+	if (!brd.IsInsideBoard(next[2])) {
+		possible[2] = { 0,0 };
+	}
+
+	//Self collision test
+	if (snake.IsInTileExceptend(next[0])) {
+		possible[0] = { 0,0 };
+	}
+	if (snake.IsInTileExceptend(next[1])) {
+		possible[1] = { 0,0 };
+	}
+	if (snake.IsInTileExceptend(next[2])) {
+		possible[2] = { 0,0 };
+	}
+
+	Location no_loc = { 0,0 };
+	if ((possible[0] == no_loc) && (possible[1] == no_loc)
+		&& (possible[2] == no_loc))
+	{
+		//making a random move because no matter what it chooses, he will die;
+		if(or_no == 1)		del_loc = { 1,0 };
+		if(or_no == 2)		del_loc = {0,1};
+		if(or_no == 3)		del_loc = { -1,0 };
+		if(or_no == 4)		del_loc = {0,-1};
+	}
+	else {
+		int ik = 0;
+		int i = 0;
+		for (ik = 0; ik < 3; ik++) {
+			if (d[i] > d[ik]) {
+				i = ik;
+			}
+		}
+		Location no_loc = { 0,0 };
+		if (possible[i] != no_loc) {
+			del_loc = possible[i];
+		}
+		else {
+			//if the shortest distant path have possible value 0
+			int j=0;
+			//make any move which is available;
+			for (int j = 0; j < 3; j++) {
+				if (possible[j] != no_loc)	break;
+			}
+			del_loc = possible[j];
+
+		}
+
+	}
+
 }
 float Game::distance(Location l1, Location l2)
 {

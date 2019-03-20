@@ -3,6 +3,8 @@
 Snake::Snake(const Location & loc)
 {
 	seg[0].InitHead(loc,Colors::White);
+	seg[1].InitBody(Colors::Green);
+	seg[1].loc = { seg[0].loc.x, seg[0].loc.y + 1 };
 }
 void Snake::Move(const Location & dloc)
 {
@@ -80,6 +82,7 @@ void Snake::Segment::Draw(Board & brd) const{
 }
 void Snake::resetsnake(Board &brd)
 {
-	nseg = 1;
+	nseg = 2;
 	seg[0].loc = { brd.Getwidth() / 2, brd.Getheight() / 2 };
+	seg[1].loc = { seg[0].loc.x , seg[0].loc.y + 1 };
 }

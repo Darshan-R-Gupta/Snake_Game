@@ -44,6 +44,6 @@ void Board::DrawBorder()
 
 bool Board::IsInsideBoard(const Location & loc) const
 {
-	return loc.x >=llw  && loc.x < width &&
+	return loc.x >= llw  && loc.x < width &&
 		   loc.y >= llh && loc.y < height;
 }
